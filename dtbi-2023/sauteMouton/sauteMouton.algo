@@ -1,0 +1,403 @@
+TP : Saute-moutons
+
+Faire se croiser deux troupeaux de moutons
+Règles : 
+    Un mouton ne peut pas reculer
+    Un mouton ne peut avancer d’un cran que si la place est libre
+    Un mouton peut sauter un mouton qui va en sens inverse si la place qui suit est libre
+
+
+PRINCIPE DE BASE POUR LE TP
+
+structure de stockage
+tableau 2d -> 7col et de 2 ligne
+
+col 0 -> 6 : emplacement pour les moutons
+ligne 0 : utilisé pour indiquer l'occupation d'un mouton ou pas
+ligne 1 : utilisé pour indiquer la couleur du mouton, le sens dans lequel il peut se déplacer
+
+ligne 0 :
+    0 : la cellule est occupée par un mouton
+    1 : la cellule n'est occupée par un mouton
+ligne 1 :
+    0 : le mouton se déplace vers la droite
+    1 : le mouton se déplace vers la gauche
+
+la valeur de ligne 1 doit suivre le mouton si il se déplace
+
+le tableau est initialisé avec :
+    col 0,1,2
+        ligne 0 : 1
+        ligne 1 : 0
+    col 3
+        ligne 0 : 0
+        ligne 1 : 0
+    col 4,5,6
+        ligne 0 : 1
+        ligne 1 : 1
+
+vérification du le déplacement d'un mouton
+    si la saisie et un chiffre
+    si la saisie est et bien dans la range du tableau
+    si la saisie comporte un mouton
+    Déterminer le sens de direction
+    si le mouton peut se déplacer
+    comment le mouton peut se déplacer, s'il peut avancer, sauter
+    
+déplacement
+    sauvegarde de la valeur de [x][1]
+    la cellule où se trouve le mouton devient [x][0] = 0, [x][1] = 0 ( ou -1 à voir)
+    la nouvelle cellule devient [x][0] = 1, [x][1] = valeur sauvegarder
+
+vérification avancer, sauter
+    ligne 1 : 0
+        col+1 <= 6
+            avancer si [x][0] = 0
+        col+2 <= 6
+            sauter si [x][0] = 0
+    ligne 1 : 0
+        col-1 <= 0
+            avancer si [x][0] = 0
+        col-2 <= 0
+        sauter si [x][0] = 0
+
+fonction de debug
+fonction de vérification de tous les moutons s'ils peuvent se déplacer ou s'ils sont arrivé
+fonction pour la boucle de jeux
+fonction de vérification de la postion, déplacement
+#################################################################################
+
+Constante Action_avancer : entier <- 0
+Constante Action_sauter : entier <- 1
+Constante Action_erreur : entier <- 2
+Constante Direction_droite : entier <- 0
+Constante Direction_gauche : entier <- 1
+Constante Direction_erreur : entier <- 2
+
+
+Fonction taille_tab() Retourne entier
+# depend du langage utiliser
+#	lignes 	sizeof(array) / sizeof(array[0])
+#	col :		sizeof(array[0]) / sizeof(array[0][0])
+# 	vector::size()
+
+#	lignes 	len(list)
+#	col :		len(list[0])
+
+# 	lignes 	list.length
+# 	col 		list[]0.length
+Début
+	Retourner 7
+Fin
+
+# initialise tous les éléments du tableau à -1
+# le vecteur doit étre passer par référence
+Procédure resetResult(vec : entier[])
+Début
+    Pour i de 0 à taille_tab() - 1 Faire
+        vec[i] <- -1
+    FPour
+Fin
+
+# debug les valeur du tableaux result passer par référence a checkPosition 
+# si avencer et sauter à false
+Procédure checkResult(vec : entier[])
+Début
+    Si vec[0] == 0 et vec[1] == 0 Alors
+        écrire("Le mouton ne peut pas avancer ni sauter")
+    FSi
+Fin
+
+# debug le retour de checkPosition
+Procédure checkReturn(check : entier, tab : entier[][])
+Début
+    Selon check
+        cas 1 :
+            écrire("La sélection est supérieure aux nombres de mouton disponibles: 0/" & taille_tab() - 1)
+        cas 2 :
+            écrire("La sélection n'est pas occupée par un mouton")
+        cas 3 :
+            écrire("Le mouton ne possède pas de sens pour avancer")
+        autre :
+    FSelon
+Fin
+
+# debug le retour de deplacerMouton
+Procédure checkDeplacement(check : entier)
+Début
+    Selon check
+        cas 1 :
+            écrire("Vous n'avez pas saisi la bonne action (0: Avancer) (1: Sauter)")
+        cas 2 :
+            écrire("La destination n'a pas été définie")
+        autre :
+    FSelon
+Fin
+
+# affichage de l'action au format texte
+Fonction actionToString(action : entier) : Retourne texte
+Début
+    Selon action
+        cas 1 :
+            Retourner "AVANCER"
+        cas 2 :
+            Retourner "SAUTER"
+        autre :
+            Retourner "ERREUR" 
+    FSelon
+Fin
+
+# affichage de la direction au format texte
+Fonction directionToString(dir : entier) : Retourne texte
+Début
+    Selon dir
+        cas 1 :
+            Retourner "DROITE"
+        cas 2 :
+            Retourner "GAUCHE"
+        autre :
+            Retourner "ERREUR" 
+    FSelon
+Fin
+
+
+# fonction qui déplace le mouton
+# mSel : mouton selectionner
+# action : action à effectuer
+# result : tableau de retour de checkPosition, passer par référence Constante
+# tab : tableau de position des moutons, passer par référence Constante
+# retourne 0 si le déplacement est possible
+# retourne 1 si l'action n'est pas valide
+# retourne 2 si la destination n'est pas valide
+Fonction deplacerMouton(mSel : entier, action : entier, result : entier[], tab : entier[][]) : Retourne entier
+    variables destination : entier <- -1
+    # sauvegarde de la direction du mouton
+    Varaible myDir : entier <- tab[mSel][1]
+
+Début
+    # vérification de l'action
+    Si action != Action_avancer et action != Action_sauter Alors
+        Retourner 1
+    FSi
+
+    # vérification de la destination
+    Selon action
+        cas Action_avancer :
+            Si result[0] == 1 Alors
+                Si myDir == 0 Alors
+                    destination <- mSel + 1
+                Si non Si myDir == 1 Alors
+                    destination <- mSel - 1
+                FSi
+            FSi
+        cas Action_sauter :
+            Si result[1] == 1 Alors
+                Si myDir == 0 Alors
+                    destination <- mSel + 2
+                Sinon Si myDir == 1 Alors
+                    destination <- mSel - 2
+                FSi
+            FSi
+        autre :
+    FSelon
+
+    écrire("Mouton(" & mSel & ") => " & directionToString(myDir) & " " & actionToString(action) & " => " & destination)
+
+    # vérification de la destination
+    Si destination == -1 Alors
+        Retourner 2
+    FSi
+
+    # mise par défaut de la position initiale du mouton
+    tab[mSel][0] <- 0
+    tab[mSel][1] <- 0
+    # mise à jour de la nouvelle position du mouton avec sa direction initialisé en début de partie
+    tab[destination][0] <- 1
+    tab[destination][1] <- myDir
+
+    Retourner 0
+Fin
+
+# fonction qui vérifie si le mouton peut avancer ou sauter
+# mSel : mouton selectionner
+# tab : tableau de position des moutons, passer par référence Constante
+# result : tableau de retour, passer par référence 
+# retourne 0 si le mouton peut avancer ou sauter
+# retourne 1 si la sélection est supérieure aux nombres de mouton disponibles
+# retourne 2 si la sélection n'est pas occupée par un mouton
+# retourne 3 si le mouton ne possède pas de sens pour avancer
+Fonction checkPosition(mSel : entier, tab : entier[][], result : entier[]) : Retourne entier
+    Variable avancer : booléen <- faux
+    Variable sauter : booléen <- faux
+    Variable dir : entier <- Direction_erreur
+
+Début
+    # vérification si la sélection est supérieure a la taille du tableau
+    Si mSel > taille_tab() - 1 Alors
+        Retourner 1
+    FSi
+
+    # vérification si la sélection est occupée par un mouton
+    Si tab[mSel][0] == 0 Alors
+        Retourner 2
+    FSi
+
+    # Déterminer si le mouton doit se déplacer à droite ou à gauche
+    Si tab[mSel][1] == 0 Alors
+        dir <- Direction_droite
+    Sinon Si tab[mSel][1] == 1 Alors
+        dir <- Direction_gauche
+    Sinon
+        Retourner 3
+    FSi
+    
+    Selon dir
+        # vérification si la postion visée ne depasse pas la taille du tableau
+        cas Direction_droite :
+            Si mSel + 2 <= taille_tab() - 1 Alors
+                sauter <- tab[mSel + 2][0] == 0
+            FSi
+            Si mSel + 1 <= taille_tab() - 1 Alors
+                avancer <- tab[mSel + 1][0] == 0
+            FSi
+        # vérification si la postion visée n'est pas inférieur à 0 
+        cas Direction_gauche :
+            Si mSel - 2 >= 0 Alors
+                sauter <- tab[mSel - 2][0] == 0
+            FSi
+            Si mSel - 1 >= 0 Alors
+                avancer <- tab[mSel - 1][0] == 0
+            FSi
+        autre :
+
+    FSelon
+
+    # mise à jour du tableau de retour
+    result[0] <- avancer
+    result[1] <- sauter
+    result[2] <- dir
+
+    Retourner 0
+Fin
+
+# affichage de la grille
+Procédure afficherGrille(pos_moutons : entier[][]) 
+    Variable result : entier[] <- {-1, -1, -1}
+    Variable direction : texte <- " "
+
+Début
+    écrire("") 
+    Pour i de 0 à taille(pos_moutons) - 1
+        écrireSRC(" " & i & " |")
+    FPour
+    écrire("") 
+
+    Pour i de 0 à taille(pos_moutons) - 1
+        resetResult(result)
+        checkPosition(i, pos_moutons, result)
+
+        direction <- " "
+        Si result[2] == 0 Alors
+            direction <- ">"
+        Sinon Si result[2] == 1 Alors
+            direction <- "<"
+        FSi
+
+        écrireSRC(" " & direction & " |")
+    FPour
+    écrire("")
+Fin
+
+# vérification si la partie est gagnée
+Fonction partie_gagner(tab : entier[][]) : booléen
+    Variable goodDir : entier <- 0
+
+Début
+    Pour i de 0 à taille_tab() - 1
+        Si i < (taille_tab() - 1) / 2 Alors
+            Si tab[i][1] == 1 et tab[i][0] == 1 Alors
+                goodDir <- goodDir + 1
+            FSi
+        Sinon Si i > taille_tab() / 2 Alors
+            Si tab[i][1] == 0 et tab[i][0] == 1 Alors
+                goodDir <- goodDir + 1
+            FSi
+        FSi
+    FPour
+    Retourner (goodDir == taille_tab() - 1)
+Fin
+
+# vérification si la partie est perdue
+Fonction partie_perdu(tab : entier[][]) : booléen
+    Variable result : entier[] <- {-1, -1, -1}
+    Variable finPartie : entier <- 0
+
+Début
+    Pour i de 0 à taille_tab() - 1
+        resetResult(result)
+        checkPos <- checkPosition(i, tab, result)
+        Si checkPos == 0 et (result[0] == 1 ou result[1] == 1) Alors
+            finPartie <- finPartie + 1
+        FSi
+    FPour
+
+    Retourner (finPartie == 0)
+Fin
+
+Procédure lancer_partie(result : entier[], tab : entier[][])
+    Variable checkPos : entier <- 0
+    Variable checkDepl : entier <- 0
+    Variable action : entier <- 0
+    Variable mSel : entier <- 0
+    Variable continuer : booléen <- vrai
+
+Début
+    TantQue continuer 
+        écrire("Choisissez un mouton de 0 à " & (taille_tab() - 1) & ", (-1 pour quitter)")
+        mSel <- saisir()
+
+        Si mSel == -1 Alors
+            continuer <- faux
+            Sortir de la boucle
+        FSi
+
+        resetResult(result)
+        checkPos <- checkPosition(mSel, tab, result)
+        checkReturn(checkPos, tab)
+        checkResult(result)
+        écrire("")
+
+        Si checkPos == 0 et (result[0] == 1 ou result[1] == 1) Alors
+            écrire("Avancer (0) ou Sauter (1) ?")
+            action <- saisir()
+
+            checkDepl <- deplacerMouton(mSel, action, result, tab)
+            Si checkDepl != 0 Alors
+                écrire("Le mouton ne peut pas : " & actionToString(action))
+                checkDeplacement(checkDepl)
+                écrire("")
+            FSi
+
+            afficherGrille(tab)
+            écrire("")
+        FSi
+
+        Si partie_gagner(tab) Alors
+            écrire("Partie gagnée")
+            continuer <- faux
+        Sinon Si partie_perdu(tab) Alors
+            écrire("Partie perdue")
+            continuer <- faux
+        FSi
+    FTq
+Fin
+
+
+Algo sauteMouton
+    Variable pos_moutons : entier[][] <- {{1,0}, {1,0}, {1,0}, {0,0}, {1,1}, {1,1}, {1,1}}
+    Variable result : entier[] <- {-1, -1, -1}
+        
+Début
+    afficherGrille(pos_moutons)
+    lancer_partie(result, pos_moutons)         
+Fin
