@@ -1,5 +1,3 @@
-
-
 #include <iostream>
 #include <vector>
 #include <format> 
@@ -275,29 +273,55 @@ void ordinateur_route(std::vector<int> & result, std::vector<std::vector<int>> &
 
 }
 
-void lancer_partie(std::vector<int> & result, std::vector<std::vector<int>> & tab) {
+int lancer_partie(std::vector<int> & result, std::vector<std::vector<int>> & tab) {
+    int _return = 0;
     int checkPos, checkDepl, action; 
-    std::string str;
     int mSel = 0;
     bool continuer = true;
     while (continuer)
     {
         std::cout << "Choisissez un mouton de 0 à " << tab.size()-1 << ", (-1 pour quitter)" << std::endl;
-        std::cin >> mSel;
-        if (!isdigit(mSel)) break;
-        if (mSel == -1) {
+        std::cin >> mSel; // un entier est attendu
+        if (std::cin.fail()) {
+            std::cin.clear(); // Efface l'état d'erreur de cin
+
+            /*
+            lorsqu'un utilisateur saisit du texte là où un nombre était attendu.
+            Permet de vider le tampon d'entrée pour se débarrasser des données erronées ou superflues, 
+            évitant ainsi des problèmes lors des lectures de données suivantes.
+            */
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore le reste de la ligne
+            
+            std::cout << "Ce n'est pas un chiffre valide." << std::endl;
+            continue;
+        } else if (mSel == -1) {
             continuer = false;
-            break;
+            _return = 1;
+            continue;
+        } else if (mSel >= 0 || mSel > static_cast<int>(tab.size()-1)) {
+            checkReturn(1, tab);
+            continue;
         }
+
         resetResult(result);
         checkPos = checkPostion(static_cast<size_t>(mSel), tab, result);
         checkReturn(checkPos, tab);
         checkResult(result);
         std::cout << std::endl;
+
         if (checkPos == 0 && (result.at(0) == 1 || result.at(1) == 1)) {
             std::cout << "Avancer (0) ou Sauter (1) ?" << std::endl;
             std::cin >> action;
-            if (!isdigit(action)) break;
+            if (std::cin.fail()) {
+                std::cin.clear(); // Efface l'état d'erreur de cin
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore le reste de la ligne
+                std::cout << "Ce n'est pas un chiffre valide." << std::endl;
+                continue;
+            } else if (action < 0 || action > 1) {
+                checkDeplacement(1);
+                continue;
+            }
+
             checkDepl = deplacerMouton(static_cast<size_t>(mSel), static_cast<Action>(action), result, tab);
             if (checkDepl != 0) {
                 std::cout << "Le mouton ne peut pas : " << actionToString(action) << std::endl;
@@ -307,17 +331,21 @@ void lancer_partie(std::vector<int> & result, std::vector<std::vector<int>> & ta
             afficherGrille(tab);
             std::cout << std::endl;
         }
+
         if (partie_gagner(tab)) {
             std::cout << "Partie gagné" << std::endl;
             continuer = false;
+            _return = 2;
         } else {
             if (partie_perdu(tab)) {
                 std::cout << "Partie perdu" << std::endl;
                 continuer = false;
+                _return = 3;
             }
         }
 
-    }    
+    }  
+    return _return;  
 }
 
 
@@ -331,9 +359,20 @@ int main() {
     std::vector<std::vector<int>> pos_moutons({{1,0}, {1,0}, {1,0}, {0,0}, {1,1}, {1,1}, {1,1}});
     std::vector<int> result({-1, -1, -1});
 
+
     afficherGrille(pos_moutons);
     std::cout << std::endl;
-    lancer_partie(result, pos_moutons);
+    int partie = lancer_partie(result, pos_moutons);
+    if (partie == 1) {
+        std::cout << "Partie quitté" << std::endl;
+    } else if (partie == 2) {
+        std::cout << "Partie gagné" << std::endl;
+    } else if (partie == 3) {
+        std::cout << "Partie perdu" << std::endl;
+    } else {
+        std::cout << "Le jeu n'a pas commencé" << std::endl;
+    }
+
     // ordinateur_route(result, pos_moutons);
 
     /*
