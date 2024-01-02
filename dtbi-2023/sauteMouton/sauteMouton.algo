@@ -55,16 +55,16 @@ déplacement
     la nouvelle cellule devient [x][0] = 1, [x][1] = valeur sauvegarder
 
 vérification avancer, sauter
-    ligne 1 : 0
-        col+1 <= 6
-            avancer si [col+1][0] == 0
-        col+2 <= 6
-            sauter si [col+2][0] == 0
-    ligne 1 : 1
-        col-1 <= 0
-            avancer si [col-1][0] == 0
-        col-2 <= 0
-            sauter si [col-2][0] == 0
+    ligne 1 == 0
+        (col+1) <= 6
+            avancer = ([col+1][0] == 0)
+        (col+2) <= 6
+            sauter = ([col+2][0] == 0)
+    ligne 1 == 1
+        (col-1) <= 0
+            avancer = ([col-1][0] == 0)
+        (col-2 )<= 0
+            sauter = ([col-2][0] == 0)
 
 TODO
 [x] fonction de debug
