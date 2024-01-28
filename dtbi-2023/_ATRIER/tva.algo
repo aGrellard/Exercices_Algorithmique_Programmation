@@ -1,0 +1,10 @@
+# Calcule le prix TTV d'un artivle
+Algo RVA
+	Variable prixHT : réel
+	Constante TVA : réel <- 20/100
+Début
+	écrire("Prix HT de l'article ?")
+	prixHT <- saisir()
+	écrire("Prix TTC du produit: " & prixHT * (1 + TVA))
+Fin
+

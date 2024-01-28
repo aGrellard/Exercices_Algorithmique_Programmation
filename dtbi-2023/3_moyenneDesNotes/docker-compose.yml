@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - D:/programmation_code/_REVISIONS/_8_ALGO/_git/3_moyenneDesNotes/html:/var/www/html
+
+volumes:
+  dbdata:

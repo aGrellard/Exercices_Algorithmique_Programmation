@@ -1,0 +1,173 @@
+# TP : Créer un programme qui dessine une des formes suivantes selon le choix de l’utilisateur.
+# 
+# Remarque : Le nombre de lignes est égal au nombre de colonnes
+# 
+# Exemple d’affichage :
+# Taille ?					
+# 5
+# Caractère ?
+# #					
+# Forme ?				
+# 1 – rectangle plein			
+# 2 – rectangle creux			
+# 3 – croix				
+# 4- triangle			
+# 5- losange
+# 6 – damier
+# 2
+# 
+# ALGO ################################################
+# 2 boucle for inbriqué
+# for col
+# 	for row
+# 		print char on row
+
+#        #
+ #   #
+  #
+ #  #
+#      #
+# besoin d'une variable "taille" pour la taille hauteur et largeur
+# on se base sur les axes X Y MIDY
+#
+# besoin d'une variable "pos" pour définir une postion gauche et une postion droite, elle sera incrémenter a la fin de chaque boucle row
+# son increment dépend de la position du curseeur sur l'axe Y 
+# besoin d'une variable "start" et "pos" pour définir la postion horizontal gauche
+# besoin d'une variable "taille" et "pos" pour définir la postion horizontal droite
+#
+# postion gauche = "start" + "pos" 
+# position droite =  "taille" - "pos"
+# incrémenter  "pos"  une fois la boucle row terminer
+# définir quand l'axe vertical s'invérse
+#
+
+
+
+
+
+#####################################################
+Algo ascii
+	Variable taille : entier <- 8
+	Variable caractere : texte <- "#"
+	Variable forme : entier <- 1
+	Variable col : entier <- 1
+	Variable row : entier <- 1
+
+    Variable choix_forme_1 : texte <- "1 – rectangle plein"		
+    Variable choix_forme_2 : texte <- "2 – rectangle creux"			
+    Variable choix_forme_3 : texte <- "3 – croix"				
+    Variable choix_forme_4 : texte <- "4- triangle"			
+    Variable choix_forme_5 : texte <- "5- losange"
+    Variable choix_forme_6 : texte <- "6 – damier"
+
+	Variable start : entier <- 1
+	Variable pos : entier <- 0
+	Variable changement_axe : entier <- 0
+	Variable rest : entier <- 0
+	Variable mid : entier <- 0
+Début
+	
+	écrire("saisir la taille")
+	taille <- saisir()
+
+	écrire("saisir le caractère")
+	caractere <- saisir()
+
+	écrire("saisir le forme")
+	caractere <- saisir()
+	
+	reste <- taille % 2
+	mid <- taille / 2
+	
+	
+    # nous parton du pricipe que à vaut <=
+    Selon forme
+        cas 1 : 
+            Pour row <- 1 à taille
+                Pour col <- 1 à taille
+                    écrireSRC(caractere)
+                FPour
+                écrire("")
+            FPour
+        cas 2 :
+            Pour row <- 1 à taille
+                Pour col <- 1 à taille
+                    Si (row == 1 ou row == taille ou col == 1 ou col == taille) Alors
+                        écrireSRC(caractere)
+                    Si non 
+                        écrireSRC(" ")
+                    FSi
+                FPour
+                écrire("")
+            FPour    
+        cas 3 :
+            Pour row <- 1 à taille
+                Pour col <- 1 à taille
+                    Si ( col==(start+pos) ou col==(taille-pos) ) Alors
+                        écrireSRC(caractere)
+                    Si non 
+                        écrireSRC(" ")
+                    FSi
+                FPour
+				
+				Si ( (start+pos)*2 > taille ) Alors
+					changement_axe = 1
+				FSi
+				
+				Si ( changement_axe == 0 ) Alors
+					pos++
+				Si non
+					pos--
+				FSi
+				
+                écrire("")
+            FPour
+        cas 4 :
+            Pour row <- 1 à taille
+                Pour col <- 1 à taille
+                    Si ( row == taille ) Alors
+                        écrireSRC(caractere)
+                    Si non 
+						Si ( col==1 ou col==pos ) Alors
+							écrireSRC(caractere)
+						Si non 
+							écrireSRC(" ")
+						FSi
+                    FSi
+                FPour
+				pos <- pos + 1
+				Si (pos == 1) Alors
+					pos = 2
+				FSi
+                écrire("")
+            FPour 
+        cas 5 :
+            Pour row <- 1 à taille
+                Pour col <- 1 à taille
+					Si (reste == 0) Alors
+						Si (row == 1 || row == taille) Alors
+							Si (col == mid || col == mid+1) Alors
+								écrireSRC(caractere)
+							Si non
+								écrireSRC(" ")
+							FSi
+						Si non Si (col == 1 || col == taille) Alors
+							Si (row == mid || row == mid+1) Alors
+								écrireSRC(caractere)
+							Si non 
+								écrireSRC(" ")
+							FSi
+						Si non Si (col == mid - pos || col == (mid+1) + pos ) Alors
+							écrireSRC(caractere)
+						Si non
+							écrireSRC(" ")
+						FSi	
+					FSi
+                FPour
+                écrire("")
+            FPour 			
+		autre : écrire("la forme n'existe pas")
+    FSelon
+
+Fin
+

@@ -1,0 +1,78 @@
+
+
+Procédure dessinerMotif(forme : entier, symbole : texte, taille : entier)
+    Variable reste : entier <- taille % 2
+    Varaible row, col : entier
+début
+    Pour row de 0 à taille - 1 Faire
+        Pour col de 0 à taille - 1 Faire
+            Selon forme Faire
+                cas 0:
+                    écrire(symbole)
+                cas 1:
+                    si col == 0 ou col == taille-1 ou row == 0 ou row == taille-1 alors
+                        écrire(symbole)
+                    sinon
+                        écrire("  ")
+                    fin_si
+                cas 2:
+                    si col == row ou row+col == taille-1 alors
+                        écrire(symbole)
+                    sinon
+                        écrire("  ")
+                    fin_si
+                cas 3:
+                    si col == 0 ou row == taille-1 ou row == col alors
+                        écrire(symbole)
+                    sinon
+                        écrire("  ")
+                    fin_si
+                cas 4:
+                    si  (
+                        row+col+1 == (taille+reste)/2 ou
+                        row+reste+col+1 ==  taille + (taille+reste)/2 ou
+                        row-col+reste == ((taille+reste)/2) ou
+                        col+reste-row == ((taille+reste)/2) 
+                    ) alors
+                        écrire(symbole)
+                    sinon
+                        écrire("  ")
+                    fin_si
+                cas 5:
+                    si (
+                        col == taille-1 et row >= (taille+reste)/2 ou row == taille-1 et col >= (taille+reste)/2 ou
+                        row ==(taille)/2 ou row+(reste?0:1) ==(taille)/2 ou
+                        col == 0 et row < (taille+reste)/2 ou row == 0 et col < (taille+reste)/2 ou
+                        row+col+1 == (taille+reste)/2 ou
+                        row+reste+col+1 ==  taille + (taille+reste)/2 ou
+                        row-col+reste == ((taille+reste)/2) ou
+                        col+reste-row == ((taille+reste)/2)  
+                    ) alors
+                        écrire(symbole)
+                    sinon
+                        écrire("  ")
+                    fin_si
+                cas 6:
+                    si (col + row) % 2 == 0 alors
+                        écrire(symbole)
+                    sinon
+                        écrire("  ")
+                    fin_si
+            fin_selon
+        fin_pour
+        écrire("")
+    fin_pour 
+    écrire("")
+fin
+
+Algo ASCIIart
+    Variable symbole : texte <- "# "
+    Variable taille : entier <- 10
+début
+    dessinerMotif(0, symbole, taille);
+    dessinerMotif(1, symbole, taille);
+    dessinerMotif(2, symbole, taille);
+    dessinerMotif(3, symbole, taille);
+    dessinerMotif(4, symbole, taille);
+    dessinerMotif(5, symbole, taille);
+fin

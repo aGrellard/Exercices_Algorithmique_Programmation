@@ -1,0 +1,47 @@
+# TP : Devinez à quel nombre je pense
+# 
+# Exemple d’affichage :
+# A quel nombre entre 1 et 100 je pense ?
+# 23
+# C’est moins !
+# 15
+#  C’est plus !
+# 19
+# C’est moins !
+# 17
+# Bravo ! Vous avez trouvé !
+#
+# Aléa(1,100) permettra de sélectionner aléatoirement un nombre entre 1 et 100
+#
+# ALGO ################################################
+# 1 déclarations
+# 2 définir nb_cache avec Aléa(1,100) 
+# 2 while saisie != nb_cache
+# 3 demander utilisateur nb_cache
+# 5 test conditionel si nb_cache > saisie
+# 6 indiqué si nb_cache > saisie
+# 7 test conditionel si nb_cache < saisie
+# 8 indiqué si nb_cache < saisie
+# 9 affichage utilisateur BRAVO
+#####################################################
+
+Algo calculMoyenneNotes
+	Constante afficher_bravo : texte <- "Bravo ! Vous avez trouvé !"
+	Constante afficher_cMoins : texte <- "C’est moins !"
+	Constante afficher_cPlus : texte <- "C’est plus !"
+	Constante demander_nb : texte <- "A quel nombre entre 1 et 100 je pense ? "
+	Variable saisie_nb : entier <- 0
+	Variable nbMystere : entier <- 0
+Début
+	nbMystere : entier <- Aléa(1,100)
+	TantQue (nbMystere != saisie_nb)
+		écrire(demander_nb)
+		saisie_nb <- saisir()
+		Si (saisie_nb > nbMystere) Alors
+			écrire(afficher_cPlus)
+		Si non
+			écrire(afficher_cMoins)
+		FinSi
+	FTq
+	écrire(afficher_bravo)
+Fin

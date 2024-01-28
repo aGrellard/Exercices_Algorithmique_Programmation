@@ -1,0 +1,10 @@
+Construction de l'image Docker (Dockerfile):
+    docker build -t [nom_de_limage] .
+        Cette commande construit une image Docker à partir du Dockerfile dans le répertoire courant. Remplacez [nom_de_limage] par le nom que vous souhaitez donner à votre image.
+Lancement de l'environnement avec Docker Compose (docker-compose.yml):
+    docker-compose up
+        Cette commande lance les services définis dans votre docker-compose.yml, en construisant les images si nécessaire. Dans votre cas, elle construira l'image à partir de votre Dockerfile et lancera un service nommé web.
+    docker-compose up -d
+        La même que ci-dessus, mais en mode détaché (en arrière-plan).
+    docker-compose down
+        Cette commande arrête et supprime les conteneurs, les réseaux, les volumes, et les images créées par docker-compose up.

@@ -1,0 +1,13 @@
+Variable i, j, val : entier
+Constante taille : entier <- 4
+Variable pattern : entier[taille][taille]
+
+i <- 0
+j <- 0
+val <- 1
+Pour i <- 0 à taille -1:
+    Pour j <- 0 à taille -1:
+        pattern[i][j] <- j+val
+    FPour
+    val <- val + 1
+Fpour

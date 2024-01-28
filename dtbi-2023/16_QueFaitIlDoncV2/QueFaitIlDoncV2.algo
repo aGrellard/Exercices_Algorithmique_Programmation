@@ -1,0 +1,27 @@
+Variable i, j, val : entier
+Constante taille : entier <- 4
+Variable pattern : entier[taille][taille]
+
+i <- 0
+j <- 0
+val <- 1
+Pour i <- 0 à taille -1:
+    Pour j <- 0 à taille -1:
+        pattern[i][j] <- i+val
+        val <- val + taille
+    FPour
+    val <- 1
+Fpour
+
+# solution tp david
+i <- 0
+j <- 0
+val <- 1
+Pour i <- 0 à taille -1:
+    Pour j <- 0 à taille -1:
+        pattern[j][i] <- val
+        val <- val + 1
+    FPour
+Fpour
+
+

@@ -1,0 +1,38 @@
+CXX = g++
+CXXFLAGS = -std=c++2a -Wall -Wextra -Wconversion -Wfloat-conversion -Wsign-conversion -Wpedantic -g
+
+all: AlgoCuisson bulletinPaie devineUnNombre multiple piege repliquesDeFilms monnaieCafe dessin ascii_noMatrice nbOcc  
+
+AlgoCuisson: AlgoCuisson.cpp
+	$(CXX) $(CXXFLAGS) -o AlgoCuisson AlgoCuisson.cpp
+
+bulletinPaie: bulletinPaie.cpp
+	$(CXX) $(CXXFLAGS) -o bulletinPaie bulletinPaie.cpp
+
+devineUnNombre: devineUnNombre.cpp
+	$(CXX) $(CXXFLAGS) -o devineUnNombre devineUnNombre.cpp
+
+multiple: multiple.cpp
+	$(CXX) $(CXXFLAGS) -o multiple multiple.cpp
+
+piege: piege.cpp
+	$(CXX) $(CXXFLAGS) -o piege piege.cpp
+
+repliquesDeFilms: repliquesDeFilms.cpp
+	$(CXX) $(CXXFLAGS) -o repliquesDeFilms repliquesDeFilms.cpp
+
+monnaieCafe: monnaieCafe.cpp
+	$(CXX) $(CXXFLAGS) -o monnaieCafe monnaieCafe.cpp
+
+dessin: dessin.cpp
+	$(CXX) $(CXXFLAGS) -o dessin dessin.cpp
+
+ascii_noMatrice: ascii_noMatrice.cpp
+	$(CXX) $(CXXFLAGS) -o ascii_noMatrice ascii_noMatrice.cpp
+
+nbOcc: nbOcc.cpp
+	$(CXX) $(CXXFLAGS) -o nbOcc nbOcc.cpp
+
+
+clean:
+	rm -f AlgoCuisson bulletinPaie devineUnNombre multiple piege repliquesDeFilms monnaieCafe dessin ascii_noMatrice nbOcc

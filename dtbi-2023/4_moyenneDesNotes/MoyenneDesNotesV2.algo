@@ -1,0 +1,42 @@
+# TP : Saisir des notes jusqu’à ce que l’utilisateur saisisse -1 et en calculer la moyenne
+# 
+# Exemple d’affichage :
+# Note (-1 pour terminer) ?
+# 9
+# Note (-1 pour terminer) ?
+# 18
+# Note (-1 pour terminer) ?
+# -1
+# La moyenne des notes est de 13,5
+# ALGO ################################################
+# 1 déclarations
+# 2 while input != -1
+# 3 test conditionel si pas -1
+# 4 demander utilisateur note
+# 5 incrementation des notes
+# 6.1 test conditionel total_notes > 0
+# 6.2 calcul de la moyenne 
+# 7 affichage utilisateur résulta
+#####################################################
+
+Algo calculMoyenneNotes
+	Constante demander_note : texte <- "Saisire une note :  (-1 pour terminer)"
+	Constante afficher_moyenne : texte <- "La moyenne est de : "
+	Constante total_notes : entier <- 0
+	Variable somme_notes : réel <- 0.0
+	Variable saisie_note : réel <- 0.0
+	Variable resulta : réel <- 0.0
+Début
+	TantQue (saisie_note != -1)
+		écrire(demander_note)
+		saisie_note <- saisir()
+		Si (saisie_note >= 0) Alors
+			somme_notes <- somme_notes + saisie_note
+			total_notes <- total_notes + 1
+		FinSi
+	FTq
+	Si (total_notes > 0) Alors
+		resulta <- somme_notes / total_notes
+	FSi
+	écrire(afficher_moyenne & resulta)
+Fin

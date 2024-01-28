@@ -1,0 +1,68 @@
+# TP : Est-ce un palindrome ?
+# 
+# Exemple d’affichage :
+# 
+# Entrez un mot puis tapez #
+# kayak#
+# kayak est un palindrome
+# 
+# Le mot est saisi caractère par caractère
+# Chaque caractère saisi est stocké dans une case d’un tableau
+# Une fois la saisie terminée, le tableau est parcouru en partant simultanément du premier et du dernier caractère
+# 
+# ALGO ################################################
+# à == <
+#####################################################
+
+Algo palindrome
+	Varaible saisi_stop : texte <- "#"
+	Constante TAILLE_MAX : entier <- 16
+	Variable lettres : texte[TAILLE_MAX]
+	Varaible mot_pos : entier <- 0
+	Varaible isPalindrome : booléen <- true
+	Variable i : entier
+
+Début 	
+	Répéter
+		écrire("saisissez une lettre, il vous reste : " & (TAILLE_MAX - mot_pos) & " caractérs disponnible.")
+		écrire("tapez: " & saisi_stop & " pour terminer la saisie");
+		lettres[mot_pos] <- saisir()
+
+		Si (lettres[mot_pos] >= "a" && lettres[mot_pos] <= "z" ) Alors
+			mot_pos <- mot_pos + 1
+		Si non
+			Si (lettres[mot_pos] != saisi_stop) Alors
+				écrire("Saisissez un caractère en minuscule sans accent.");
+			FSi
+		FSi
+
+		Si (mot_pos >= TAILLE_MAX) {
+			écrire("taille max atteinte")
+		FSi
+
+	TantQue (lettres[mot_pos] != saisi_stop && mot_pos < TAILLE_MAX ) FRépéter
+
+    écrire("le mot :")
+    Pour i <- 0 à mot_pos
+        écrireSRC(lettres[mot_pos])
+    FPour
+    écrire()
+    
+
+    bool isPalindrome = true;
+    Pour i <- 0 à mot_pos /2
+        Si (lettres[i] != lettres[ mot_pos - 1 - i]) Alors
+            isPalindrome = false;
+            break
+        FSi
+	FPour
+
+    Si (isPalindrome) Alors
+        écrire("est un palindrome")
+    Si non
+        écrire("n'est pas un palindrome")
+    FSi
+
+Fin
+
+	

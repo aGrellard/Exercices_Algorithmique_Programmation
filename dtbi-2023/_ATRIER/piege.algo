@@ -1,0 +1,68 @@
+Algo Piege
+Variable nbTentative : entier <- 1
+Variable saisie : texte
+Constante MAX_TENTATIVES : entier <- 5
+Début
+	saisie <- saisir("Quelle est la capitale de la France ?")
+	TantQue saisie != "Paris" ou MAX_TENTATIVES != 0
+		écrire("Mauvaise réponse !")
+		écrire("Plus que " & MAX_TENTATIVES - nbTentative & " tentative(s)") 
+		saisie <- saisir("Quelle est la capitale de la France ?")
+	FTq
+	Si MAX_TENTATIVES - nbTentative != 0 Alors
+		écrire("Bravo !")
+	Sinon
+		écrire("Revoyez votre géographie !")
+	FSi
+Fin
+# le programme est sensé demander a l'utilisateur de trouver la capitale d'un pays
+#
+# déclaration
+# saisie, afféctation de l'entrée clavier
+# MAX_TENTATIVES, nb de tentative max
+# nbTentative, stockage du nb de tentative
+# 
+# algo
+# 1 affectation de saisie via entrée clavier
+# 2 début TanQue
+# 	sortie de boucle comprte 2 test conditionel
+# 		saisie == "paris" : valide
+# 		MAX_TENTATIVES == 0 : MAX_TENTATIVES est une constante initialisé a 5 elle sera forcément pas == 0 sur toutes la duré du programmes
+# 		!!! si tu utilise un ||  il faut que les 2 condition soit réunis, ce n'est pas adapté pour la sortie de notre boucle ou il faut que ce soit l'un ou l'autre, il faut utiliser &&
+# 3 afficher Mauvaise réponse ! : c valable , vu qu'une saisie utilisateur est faite avant de débute le TanqQue
+# 4 afficher tentative réstante : c valable , il faut aussi s'assurer que nbTentative soit incrémenté et ce n'est pas le cas !!!!
+# 5 affectation de saisie via entrée clavier : valable
+# 
+# la sortie de boucle est possible uniquement si la saisie est == a paris et MAX_TENTATIVES == 0
+# 
+# 6 FTq
+# test conditionel 
+# 	si MAX_TENTATIVES - nbTentative != 0 : ça na pas de sens  
+#		écrire("Bravo !")
+# 	else
+# 		écrire("Revoyez votre géographie !")
+#
+# le message sera "Revoyez votre géographie !" peu improte si l'utilisateur trouve la bonne réponse avant le nb de MAX_TENTATIVES de toute façon tu ne sortira pas de la boucle !!!!!!!!
+#
+Algo Solution
+Variable nbTentative : entier <- 1
+Variable saisie : texte
+Constante MAX_TENTATIVES : entier <- 5
+Début
+	écrire("Quelle est la capitale de la France ?")
+	saisie <- saisir()
+	TantQue saisie != "Paris" && nbTentative < MAX_TENTATIVES
+		écrire("Mauvaise réponse !")
+		écrire("Plus que " & MAX_TENTATIVES - nbTentative & " tentative(s)") 
+		écrire("Quelle est la capitale de la France ?")
+		saisie <- saisir()
+		Si saisie != "Paris" Alors
+			nbTentative <- nbTentative + 1
+		FSi
+	FTq
+	Si nbTentative > MAX_TENTATIVES Alors
+		écrire("Revoyez votre géographie !")
+	Sinon
+		écrire("Bravo !")
+	FSi
+Fin

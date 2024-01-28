@@ -1,0 +1,63 @@
+# TP : Créer un programme qui rend la monnaie (V2)
+# 
+# Gérer le stock de pièces
+# initialement vous avez un stock de pièces.
+
+# Modifier ce stock en fonction des pièces insérées et des pièces distribuées
+
+# ALGO ################################################
+
+#####################################################
+
+Algo monnaieCafeV2
+	Constante afficher_bonjour : texte <- "Bonjour vous avez selectionner un expresso sans sucre"
+	Constante afficher_prixCafe : texte <- "Prix du café : "
+	Constante afficher_pieces : texte <- "Piéces acceptée : 2€ 1€ 0,50€ 0,20€ 0,10€ 0,05€"
+	Constante afficher_refuPiece : texte <- "Votre piéce n'est pas acceptée "
+	Constante afficher_renduPiece : texte <- "Veuillez récuperer votre monnaie : "
+	Constante afficher_cafe : texte <- "Votre café est en cour de préparation"
+	Constante afficher_reste : texte <- "Il vous reste a payer : "
+	
+	Constante afficher_credits : texte <- "Vous diposé de : "
+	Constante afficher_inserer : texte <- "Veuillez inserer une piéce"
+	
+	Constante prix_cafe : réel <- 0,60
+	Variable credit_actuell : réel <- 0,0
+	Variable saisie : réel <- 0.0
+	Variable calcul : réel <- 0.0
+	
+Début
+	écrire(afficher_bonjour)
+	écrire(afficher_prixCafe & prix_cafe)
+	écrire(afficher_pieces)
+	TantQue (credit_actuel < prix_cafe) 
+		écrire(afficher_credits & credit_actuell & " €")
+		écrire(afficher_inserer)
+		saisie <- saisir()
+		# ej part sur le principe qu'il n'y a pas de break jusqua cas : 0,05 et que le switch accepte le float ou double 
+		Selon saisie
+			cas : 2 	 		
+			cas : 1  			
+			cas : 0,50  	
+			cas : 0,20 		
+			cas : 0,10		
+			cas : 0,05
+				credit_actuell <- credit_actuell + saisie	
+			autre : 		
+				écrire(afficher_refuPiece)
+				écrire(afficher_pieces)
+				écrire(afficher_inserer)
+		FSelon
+		Si (credit_actuell >= prix_cafe) Alors
+			écrire(afficher_cafe)
+			calcul <- credit_actuell - prix_cafe
+			Si (calcul>0) Alors
+				écrire(afficher_refuPiece & calcul & " €")
+			FSi
+		Si non
+			calcul <- prix_cafe - credit_actuell
+			écrire(afficher_reste & calcul & " €")
+		FSi	
+	FTq
+	écrire(afficher_succes & nbUtilisateur & afficher_resultaTrue)
+Fin

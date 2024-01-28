@@ -1,0 +1,53 @@
+# TP : Modifier votre algorithme pour afficher en plus, le pourcentage de notes au dessus de 10
+# 
+# Exemple d’affichage :
+# Il y a 50% des notes au-dessus de 10/20.
+# 
+# 
+# Exemple d’affichage :
+# Note (-1 pour terminer) ?
+# 9
+# Note (-1 pour terminer) ?
+# 18
+# Note (-1 pour terminer) ?
+# -1
+# La moyenne des notes est de 13,5
+# ALGO ################################################
+# 1 déclarations
+# 2 while input != -1
+# 3 test conditionel si pas -1
+# 4 demander utilisateur note
+# 5 incrementation des notes
+# 6.1 test conditionel total_notes > 0
+# 6.2 calcul de la moyenne 
+# 7 affichage utilisateur résulta
+#####################################################
+
+Algo calculMoyenneNotes
+	Constante demander_note : texte <- "Saisire une note :  (-1 pour terminer)"
+	Constante afficher_moyenne : texte <- "La moyenne est de : "
+	Constante total_notes : entier <- 0
+	Variable somme_notes : réel <- 0.0
+	Variable saisie_note : réel <- 0.0
+	Variable resulta : réel <- 0.0
+	Variable noteSup10 : entier <- 0
+	Variable pourcSup10 : entier <- 0.0
+Début
+	TantQue (saisie_note != -1)
+		écrire(demander_note)
+		saisie_note <- saisir()
+		Si (saisie_note >= 0) Alors
+			somme_notes <- somme_notes + saisie_note
+			total_notes <- total_notes + 1
+			Si (saisie_note > 10 ) Alors
+				noteSup10 <- noteSup10 +1
+			FSi
+		FinSi
+	FTq
+	Si (total_notes > 0) Alors
+		resulta <- somme_notes / total_notes
+		pourcSup10 = (noteSup10 / total_notes) * 100
+	FSi
+	écrire(afficher_moyenne & resulta)
+	écrire("Il y a " & pourcSup10 " % de notes au dessus de 10")
+Fin

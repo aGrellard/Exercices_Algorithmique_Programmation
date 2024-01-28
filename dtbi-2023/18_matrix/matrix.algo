@@ -1,0 +1,21 @@
+Algo matrix
+Variable i, j: entier
+Constante axe_X : entier <- 20
+Constante axe_Y : entier <- 30
+Variable pattern : entier[axe_X][axe_Y]
+Variable char : texte <- ""
+i <- 0
+j <- 0
+Début
+    Pour i <- 0 à axe_X -1:
+        Pour j <- 0 à axe_Y -1:
+            char <- aléa('', '²')
+            pattern[i][j] <- char
+            Si (j>0) Alors
+                écrireSRC(" ") 
+            FSi
+            écrireSRC(char) 
+        FPour
+        écrire("") 
+    Fpour
+Fin

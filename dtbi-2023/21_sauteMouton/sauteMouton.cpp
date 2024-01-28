@@ -298,7 +298,7 @@ int lancer_partie(std::vector<int> & result, std::vector<std::vector<int>> & tab
             continuer = false;
             _return = 1;
             continue;
-        } else if (mSel >= 0 || mSel > static_cast<int>(tab.size()-1)) {
+        } else if (mSel < 0 || mSel > static_cast<int>(tab.size()-1)) {
             checkReturn(1, tab);
             continue;
         }

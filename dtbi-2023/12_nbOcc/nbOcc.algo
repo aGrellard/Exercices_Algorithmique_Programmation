@@ -1,0 +1,65 @@
+# TP ###################################################
+# TP : Créer un algorithme qui calcule le nombre de fois où chaque chiffre a été saisi.
+# 
+# Saisir des chiffres compris entre 0 et 9
+# -1 pour terminer la saisie
+# Calculer le nombre de fois où chaque chiffre a été saisi par l’utilisateur.
+# 
+# Exemple d’affichage : 
+# Entrer une valeur entre 0 et 9 :
+# 2
+# Autre valeur, SVP :
+# 9
+# Autre valeur, SVP :
+# 2
+# Autre valeur, SVP :
+# 2
+# Autre valeur, SVP :
+# 0
+# Autre valeur, SVP :
+# -1
+
+# ALGO ################################################
+# déclaration tab 10
+# intialiser le tableaux avec des 0
+# affichage
+# Répeter
+# 	si bon nombre, inncrémentation de la cellule visée
+# affichage
+#####################################################
+
+Algo nbOcc
+	Constante demander_valeur_1 : texte <- "Entrer une valeur entre 0 et 9, -1 pour terminer la saisie"
+	Constante demander_valeur_2 : texte <- "Autre valeur, SVP"
+	Constante tab_taille : endtier <- 10
+	Variable tab : entier[tab_taille] 
+	Variable saisi_utilisateur : entier <- 0
+	
+	Pour i : entier <- 0 à tab_taille
+		tab[i] <- 0
+	FPour
+	
+	
+	écrire(demander_valeur_1)
+	Répéter
+		saisi_utilisateur <- saisir()
+		Si (saisi_utilisateur >= 0 et saisi_utilisateur < tab_taille) Alors 
+			Pour i : entier <- 0 à tab_taille
+				Si (i==saisi_utilisateur) Alors
+					tab[i] <- tab[i] + 1
+				FSi
+			FPour
+		FSi
+		Si (saisi_utilisateur != -1) Alors
+			écrire(demander_valeur_2)
+		FSi
+	TantQue (saisi_utilisateur != -1) FRépéter
+	
+	Pour i : entier <- 0 à tab_taille
+		écrire("Nombre de " & i & " : " & tab[i])
+	FPour
+
+Fin
+
+	
+	

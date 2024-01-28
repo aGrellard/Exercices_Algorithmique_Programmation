@@ -1,0 +1,62 @@
+# TP : Mini bataille navale
+# 
+# Plateau de jeu de 4*4 cases
+# Une des cases du tableau (choisie aléatoirement) contient un bateau
+#
+# ALGO ################################################
+# choisir un case sur la matrix
+# rcupérer sa postion x, y
+# demande utilisateur col
+# demande utilisateur row
+# check
+# réponse
+# nombre de tours possible
+# while
+# 
+#####################################################
+
+Algo microBatailleNavale
+
+Constante demander_col : texte <- "Quelle colonne ?"
+Constante demander_row : texte <- "Quelle ligne ?"
+Constante TAILLE : entier <- 4
+
+Varaible bonneReponse : booléen <- false
+Variable matrix_user : entier[TAILLE][TAILLE]
+
+Varaible ligne_alea : entier <- aléa(0, TAILLE + 1) // de 0 à 3 
+Varaible col_alea : entier <- aléa(0, TAILLE + 1) // de 0 à 3 
+
+Varaible saisi_ligne, saisi_col : entier <- 0
+
+Pour i <- 0 à TAILLE // de 0 à 3 
+    Pour j <- 0 à TAILLE // de 0 à 3 
+        matrix_user[i][j] <- 0
+    FPour
+Fpour
+Début
+    TantQue (!bonneReponse)
+        écrire(demander_col)
+        saisi_col <- saisir()
+        écrire(demander_row)
+        saisi_ligne <- saisir()
+        Si (saisi_col >= 0  et saisi_col < 4) et (saisi_ligne >= 0  et saisi_ligne < 4) Alors
+            Si (saisi_ligne == ligne_alea et saisi_col == col_alea) Alors
+                bonneReponse = true
+                écrire("Plouf coule") 
+            Si non
+                matrix_user[saisi_col][saisi_ligne] <- 1
+                Pour i <- 0 à TAILLE // de 0 à 3 
+                    Pour j <- 0 à TAILLE // de 0 à 3 
+                        Si (matrix_user[i][j] == 1) Alors
+                            écrireSRC("x ") 
+                        Si non 
+                            écrireSRC("? ") 
+                        FSi
+                    FPour
+                    écrire()
+                Fpour  
+            FSi
+        FSi     
+    FTq
+Fin

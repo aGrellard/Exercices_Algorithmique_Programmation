@@ -1,0 +1,41 @@
+# TP : Est-ce un palindrome ?
+# 
+# Exemple d’affichage :
+# 
+# Entrez un mot puis tapez #
+# kayak#
+# kayak est un palindrome
+# 
+# Le mot est saisi caractère par caractère
+# Chaque caractère saisi est stocké dans une case d’un tableau
+# Une fois la saisie terminée, le tableau est parcouru en partant simultanément du premier et du dernier caractère
+# 
+# ALGO ################################################
+# à == <
+#####################################################
+
+Algo palindrome
+	Constante taille : entier <- 5
+	Variable tab : texte[taille] 
+
+	tab[0] <- "k"
+	tab[1] <- "a"
+	tab[2] <- "y"
+	tab[3] <- "a"
+	tab[4] <- "k"
+	
+	Variable lettre : texte 
+	Variable i, j : entier
+
+début 	
+
+	Pour i <- 0 à taille // i=0; i < 0; i++
+		lettre <- tab[i - 1 - taille ]
+		Si (lettre != tab[i]) Alors
+			écrire("Ce n'est pas un palindrome")
+			retourner 0 // break, exit
+		fin_si 
+	fin_pour 
+Fin
+
+	

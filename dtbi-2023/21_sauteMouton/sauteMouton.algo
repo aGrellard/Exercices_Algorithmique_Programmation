@@ -117,7 +117,7 @@ Début
 Fin
 
 # debug le retour de checkPosition
-Procédure checkReturn(check : entier, tab : entier[][])
+Procédure checkReturn(check : entier)
 Début
     Selon check
         cas 1 :
@@ -142,26 +142,26 @@ Début
     FSelon
 Fin
 
-# affichage de l'action au format texte
+# affichage de l'action au format texte.
 Fonction actionToString(action : entier) : Retourne texte
 Début
     Selon action
-        cas 1 :
+        cas 0 :
             Retourner "AVANCER"
-        cas 2 :
+        cas 1 :
             Retourner "SAUTER"
         autre :
             Retourner "ERREUR" 
     FSelon
 Fin
 
-# affichage de la direction au format texte
+# affichage de la direction au format texte.
 Fonction directionToString(dir : entier) : Retourne texte
 Début
     Selon dir
-        cas 1 :
+        cas 0 :
             Retourner "DROITE"
-        cas 2 :
+        cas 1 :
             Retourner "GAUCHE"
         autre :
             Retourner "ERREUR" 
@@ -178,9 +178,11 @@ Fin
 # retourne 1 si l'action n'est pas valide
 # retourne 2 si la destination n'est pas valide
 Fonction deplacerMouton(mSel : entier, action : entier, result : entier[], tab : entier[][]) : Retourne entier
-    variables destination : entier <- -1
+    
+    Variable destination : entier <- -1
+
     # sauvegarde de la direction du mouton
-    Varaible myDir : entier <- tab[mSel][1]
+    Variable myDir : entier <- tab[mSel][1]
 
 Début
     # vérification de l'action

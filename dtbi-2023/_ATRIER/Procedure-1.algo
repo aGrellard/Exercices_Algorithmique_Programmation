@@ -1,0 +1,9 @@
+
+Procédure CalculerSommeValeurs(de, vers)
+	Variable somme : entier
+	Variable compteur : entier
+	somme <- 0
+	compteur <- de
+	Pour compteur à vers
+		somme <- somme + compteur
+	Retourner somme

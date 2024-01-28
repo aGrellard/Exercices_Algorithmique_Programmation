@@ -1,0 +1,67 @@
+# TP : Créer un programme qui doit deviner un nombre choisi par l’utilisateur
+# 
+# L’utilisateur lui indique si le nombre est plus grand (+), plus petit (-) ou s’il a trouvé le nombre (=)
+# Exemple d’affichage :
+# 	Choisissez un nombre compris entre 1 et 100, puis appuyez sur une touche
+# a
+# Je tente 45, est-ce plus, moins ou est-ce le nombre (+/-/=) ?
+# -
+# Je tente 10, est-ce plus, moins ou est-ce le nombre (+/-/=) ?
+# +
+# Je tente 22, est-ce plus, moins ou est-ce le nombre (+/-/=) ?
+# +
+J# e tente 27, est-ce plus, moins ou est-ce le nombre (+/-/=) ?
+# =
+# Super ! J’ai trouvé en 4 tentatives !
+# 
+# ALGO ################################################
+# int nbUtilisateur
+# int nbOrdinateur
+#int nbMin = 1
+#int nbMax = 100
+# string indicateur 
+# string choix_nombre 
+#
+# saisir nbUtilisateur
+# Répeter TantQue réponse != "="
+# nbOrdinateur = Aléa(nbMin,nbMax) 
+# demande si nbOrdinateur : < >
+# test conditionel
+# 	si > 	nbMax = nbOrdinateur
+# 	si < 	nbMin = nbOrdinateur
+#	si = exit
+#####################################################
+
+Algo devinerUnNombre
+	Constante afficher_choixNbUtilisateur : texte <- "Choisissez le nombre enter 1 et 100 que je vais devoir deviner :"
+	Constante afficher_demandeOrdinateur : texte <- "Votre nombre est-il supérieur ou inférieur ou égale à : "
+	Constante afficher_choix_1 : texte <- "pour  supérieur saisir : >"
+	Constante afficher_choix_2 : texte <- "pour  inférieur saisir : <"
+	Constante afficher_choix_3 : texte <- "pour  égale saisir : ="
+	Variable nbMin : entier <- 1
+	Variable nbMax : entier <- 100
+	Variable nbUtilisateur : entier <- 0
+	Variable nbOrdinateur : entier <- 0
+	Variable indicateur : texte <- ""
+	
+Début
+	
+	écrire(afficher_choixNbUtilisateur)
+	nbUtilisateur <- saisir()
+	Répéter
+		nbOrdinateur <- Aléa(nbMin,nbMax)
+		écrire(afficher_demandeOrdinateur & nbOrdinateur)
+		écrire(afficher_choix_1)
+		écrire(afficher_choix_2)
+		écrire(afficher_choix_3)
+		indicateur <- saisir()
+		Si (indicateur == "<") Alors
+			nbMin <- nbOrdinateur
+		Si non Si (indicateur == ">") Alors
+			nbMax <- nbOrdinateur
+		Si non Alors
+			écrire("J'ais trouvé, votre nombre est : " & nbOrdinateur) 
+		FSi
+	TantQue (indicateur != "=") FRépéter
+	
+Fin

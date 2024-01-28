@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nombreCacheCache</title>
+</head>
+<body>
+    <script>
+        const afficher_bravo = "Bravo ! Vous avez trouvé !";
+        const afficher_cMoins = "C’est moins !";
+        const afficher_cPlus = "C’est plus !";
+        const demander_nb = "A quel nombre entre 1 et 100 je pense ? ";
+        let saisie_nb = 0;
+        let nbMystere = Math.floor(Math.random() * 100) + 1;
+        do {
+            saisie_nb = parseInt(prompt(demander_nb));
+            if (nbMystere != saisie_nb) {
+                if (saisie_nb > nbMystere) {
+                    alert(afficher_cMoins);
+                } else {
+                    alert(afficher_cPlus);
+                }
+            }
+        } while (nbMystere != saisie_nb);
+        alert(`Bavo ! Vous avez trouvé ! la réponse était ${nbMystere}` );
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+// Concept RAII
+/**
+ * @class ConsoleModeGuard
+ * @brief Classe pour gérer le mode de la console.
+ * 
+ * @details Lors de la création d'une instance de cette classe, l'écho de la console est désactivé. 
+ *          Lors de sa destruction, le mode original de la console est rétabli. Cette classe est spécifique à Windows.
+ */
+class ConsoleModeGuard {
+private:
+    HANDLE hStdin; // handle de l'entrée standard
+    DWORD originalMode; // mode original de la console
+
+public:
+    ConsoleModeGuard() : hStdin(GetStdHandle(STD_INPUT_HANDLE))  { // récupère le handle de l'entrée standard
+        GetConsoleMode(hStdin, &originalMode); // récupère le mode original de la console
+        SetConsoleMode(hStdin, originalMode & ~ENABLE_ECHO_INPUT); // désactive l'écho
+    }
+
+    ~ConsoleModeGuard() {
+        SetConsoleMode(hStdin, originalMode); // rétablit le mode original de la console
+    }
+};
+
+/**
+ * @fn void flushInputBuffer()
+ * @brief Vide le tampon d'entrée du clavier.
+ * 
+ * @details La fonction vérifie si des caractères sont disponibles dans le tampon d'entrée du clavier et les lit 
+ *          jusqu'à ce que le tampon soit vide. Cette fonction est spécifique à Windows.
+ */
+void flushInputBuffer() {
+    int ch;
+    while ((ch = _kbhit()) != 0) _getch(); // Vide le tampon tant qu'il y a des caractères
+}
+
+/**
+ * @fn void saisieClavier(std::string& input)
+ * @brief Lit une entrée du clavier sans écho et stocke chaque caractère dans une chaîne.
+ * 
+ * @details La fonction lit les caractères du clavier sans afficher l'écho directement. 
+ *          Chaque caractère est ajouté à la chaîne 'input' et est également affiché à l'écran suivi d'un espace.
+ * 
+ * @param[out] input Chaîne où les caractères lus sont stockés.
+ */
+void saisieClavier(std::string & input){
+   ConsoleModeGuard guard; // désactive l'écho ici
+
+  char c; // Caractère lu
+
+  while (true) {
+    c = _getch(); // Lire un caractère
+
+    if (c == '\r') { // Si c'est la touche 'Entrée', on sort de la boucle
+      break;
+    }
+
+    input += c; // Ajouter le caractère à la chaîne
+    std::cout << c << ' '; // afficher le caractère suivi d'un espace
+  }
+}
+std::string checkPostion_MID(int pos, int dir, const std::vector<std::vector<int>> & tab) { 
+    auto mPos = tab.at(pos);
+    auto nextPos = pos+1;
+    auto prevPos = pos-1;
+    auto mNextPos = tab.at(nextPos);
+    auto mPrevPos = tab.at(prevPos);
+    int sense = 0;
+    bool canMove = false;
+    std::string result = "";
+
+    if (dir == 0 && mPos.at(1) == 0) {
+        canMove = true;
+    } else if (dir == 0 && mPos.at(1) == 0) {
+        canMove = true;
+    } 
+
+    if (canMove && mPos.at(0) == 1 && mNextPos.at(0) == 0 && mPrevPos.at(0) == 0) {
+        if (dir == 0) {
+            result = std::format("Mouton(Le mounton {} peut avancer en : {})", pos, nextPos);
+        } else if (dir == 1) {
+            result = std::format("Mouton(Le mounton {} peut avancer en : {})", pos, prevPos);
+        }
+    }
+}
+std::string checkPostion_LR(int pos, const std::vector<std::vector<int>> & tab) {
+
+    if (pos < 0 || pos > tab.size() ) return "";
+    if (pos == (tab.size()-1)/2) return "";
+
+    auto mPos = tab.at(pos);
+    auto mNextPos = tab.at(pos);
+    auto nextPos = 0;
+    int sense = 0;
+    bool canMove = false;
+
+    std::string result = "";
+
+    if (pos < (tab.size()-1)/2 ) {
+        nextPos = pos+1;
+        sense = 0;
+    } else if (pos > (tab.size()-1)/2) {
+        sense = 1;
+        nextPos = pos-1;
+    } 
+
+    mNextPos = tab.at(nextPos);
+
+    if (sense == 0 && mPos.at(1)==0) {
+        canMove = true;
+    } else if (sense == 1 && mPos.at(1)==1) {
+        canMove = true;
+    } else {
+        canMove = false;
+    }
+    result = std::format("Mouton(pos: {}, mPos[0]: {}, mPos[1]: {}, canMove: {}, nextpos: {}, mNextPos[0]: {})", pos, mPos.at(0), mPos.at(1), canMove, nextPos,  mNextPos.at(0) ); 
+
+    if (canMove && mPos.at(0) == 1 && mNextPos.at(0) == 0) {
+        result = std::format("Le mounton {} peut avancer en : {}", pos, nextPos);
+    } else {
+    }
+
+    std::cout << result << std::endl;
+    
+    return result;
+
+}

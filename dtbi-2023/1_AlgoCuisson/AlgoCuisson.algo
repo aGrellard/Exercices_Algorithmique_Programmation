@@ -1,0 +1,74 @@
+# TP ###################################################
+# Afficher le temps de cuisson d’une viande en fonction du type de la viande, du mode de cuisson et du poids de la viande
+# Pour cuire 500 grammes de bœuf, il faut 
+#	10 minutes si on le veut BLEU
+# 	17 minutes si on le veut A POINT
+# 	25 minutes si on le veut BIEN CUIT
+# Pour cuire 400 grammes d’agneau, il faut 
+# 	15 minutes si on le veut BLEU
+# 	25 minutes si on le veut A POINT
+# 	40 minutes si on le veut BIEN CUIT
+# Le temps de cuisson est proportionnel au poids
+# Le résultat est affiché en secondes
+# ALGO ################################################
+# 1 afficher utilisateur demander type de viandes
+# 2 afficher utilisateur demander pois en grammes
+# 3 afficher utilisateur demander type de cuisson 
+# 4 tests conditionnels du type de viande
+# 5 switch case du type de cuisson
+# 6 aféctation de la durée avec une régle de trois pour trouver la durée
+# 7 *60 pour le résulta en secondes
+# 8 Afficher utilisateur réponse
+#####################################################
+
+Algo cuissonViandes
+	Constante demander_cuisson : texte <- "Quelle cuisson souhaitez vous : 1: Bleu, 2: A Point, 3: Cuit ? "
+	Constante demander_poids : texte <- "Combien de gramme de viande voullez-vous : ? "
+	Constante demander_typeViande : texte <- "Que voullez-vous vous manger : 1: Boeuf ou 2: Agneau ?"
+	Variable reponse_cuisson : entier <- 0
+	Variable reponse_poids : entier <- 0
+	Variable reponse_typeViande : entier <- 0
+	Variable resulta_duree : réel <- 0
+Début
+	#pseudocode ou coresspond a ||
+	TantQue (reponse_cuisson == 0 ou reponse_typeViande > 3)
+		écrire(demander_cuisson)
+		reponse_cuisson <- saisir()	
+	FTq
+	TantQue (reponse_poids == 0)
+		écrire(demander_poids)
+		reponse_poids <- saisir()	
+	FTq
+	TantQue (reponse_typeViande == 0 ou reponse_typeViande > 2)
+		écrire(demander_typeViande)
+		reponse_typeViande <- saisir()	
+	FTq	
+	Si (demander_typeViande == 1) Alors
+		Selon (reponse_cuisson)
+			cas 1 :
+				resulta_duree <- 10.0 * (reponse_poids/500)
+			cas 2 :
+				resulta_duree <- 17.0 * (reponse_poids/500)
+			cas 3 :
+				resulta_duree <- 25.0 * (reponse_poids/500)
+			autre : 
+				resulta_duree <- 17.0 * (reponse_poids/400) 
+		FSelon
+	Si non Si (demander_typeViande == 2) Alors
+		Selon (reponse_cuisson)
+			cas 1 :
+				resulta_duree <- 15.0 * (reponse_poids/400)
+			cas 2 :
+				resulta_duree <- 25.0 * (reponse_poids/400)
+			cas 3 :
+				resulta_duree <- 40.0 * (reponse_poids/400)
+			autre : 
+				resulta_duree <- 25.0 * (reponse_poids/400) 
+		FSelon
+ 	FSi
+	resulta_duree <- resulta_duree * 60
+	écrire("Vous serez servit dans : " & resulta_duree & " secondes")
+Fin
+
+# avoir si case i: break; en psudeocode
+# TEST OK EN C++

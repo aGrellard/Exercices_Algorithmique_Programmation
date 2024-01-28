@@ -1,0 +1,49 @@
+# TP : Créer un programme qui dessine un rectangle selon une largeur, une hauteur et un caractère défini par l’utilisateur.
+# 
+# Nouvelle méthode : écrireSRC() -> permet d’écrire sans retourner à la ligne
+# 
+# Exemple affichage :
+# 
+# Largeur ?
+# 8
+# Hauteur ?
+# 5
+# Caractère ?
+# # 
+# ########
+# ########
+# ########
+# ########
+# ########
+# 
+# 
+# ALGO ################################################
+# 2 boucle for inbriqué
+# for col
+# 	for row
+# 		print char on row
+#####################################################
+Algo ascii
+	Variable largeur : entier <- 8
+	Variable hauteur : entier <- 5
+	Variable caractere : texte <- "#"
+	Variable cpt_1 : entier <- 1
+	Variable cpt_2 : entier <- 1
+	
+Début
+	
+	écrire("saisir la largeur")
+	largeur <- saisir()
+	écrire("saisir la hauteur")
+	hauteur <- saisir()
+	écrire("saisir le caractère")
+	caractere <- saisir()
+	
+	Pour cpt_1 à hauteur
+		Pour cpt_2 à largeur
+			écrireSRC(caractere)
+		FPour
+		écrire("")
+	FPour
+Fin
+

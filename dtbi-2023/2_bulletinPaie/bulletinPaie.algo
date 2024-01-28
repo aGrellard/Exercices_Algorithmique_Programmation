@@ -1,0 +1,60 @@
+# TP ###################################################
+# Afficher le bulletin de paie simplifié d’un salarié à partir des informations saisies
+# Le salaire de base
+# 	Les 169 premières heures sont payées sans majoration
+# 	Entre 169 et 180 heures, une majoration de 50% est appliquée
+# 	Au-delà de 180 heures, la majoration passe à 60%
+# La prime familiale
+# 	1 enfant : 20 €
+# 	2 enfants : 50€
+# 	Au-delà de 2 enfants : 70€ + 20€ par enfant supplémentaire
+# ALGO ################################################
+# 1 afficher utilisateur demander nb heures
+# 2 afficher utilisateur demander nb enfants
+# 3 determiner T/h
+# 4 test conditional du nb heures
+# 	calcul de base															<= 169 	nb_hrs * T/
+#	calcul des 169hr + les heures supp majorées 									<= 180 	169  * T/  + (nb_hrs - 169)  * T/ * 1.5
+#	calcul des 169hr + les heures supp majorées a 50% + les heures supp majorées a 60% 	> 180	180 * T/  +  (11 * T/ * 1.5)  + (nb_hrs - 180) * T/ * 1.6 
+# 5 switch case pour appliquer la prime selon nb enfant
+# 6 afficher résulta
+#####################################################
+
+
+Algo bulletinDePaie
+	Constante hrs_majoree_50 : réel <- 1.5
+	Constante hrs_majoree_60 : réel <- 1.6
+	Constante tarif_horaires : réel <- 12.0
+	Constante prime_1 : entier <- 20
+	Constante prime_2 : entier <- 50
+	Constante demander_nb_heures : texte <- "Combien d'heures avez vous travailler ?"
+	Constante demander_nb_efants : texte <- "Combien d'enfants avez vous ?"
+	Variable nb_hrs : réel <- 0.0
+	Variable nb_enfants : entier <- 0
+	Variable total_sans_prime : réel <- 0.0
+	Variable total : réel <- 0.0
+Début
+	écrire(demander_nb_heures)
+	nb_hrs <- saisir()
+	écrire(demander_nb_efants)
+	nb_enfants <- saisir()	
+	
+	Si (nb_hrs <= 169) Alors
+		total <- nb_hrs * tarif_horaires
+	Si non Si (nb_hrs <= 180) Alors
+		total <- 169 * tarif_horaires
+		total <- total + ((nb_hrs-169) * tarif_horaires) * hrs_majoree_50
+	Si non
+		total <- 180 * tarif_horaires
+		total <- total + (11 * tarif_horaires) * hrs_majoree_50
+		total <- total + ((nb_hrs-180) * tarif_horaires) * hrs_majoree_60
+	FSi
+	Si (nb_enfants > 0) Alors
+		Selon nb_enfants
+			cas 1 : total <- total + 20
+			cas 2 : total <- total + 50
+			autre : total <- total + 70 + (nb_enfants-2) * 20	
+		FSelon
+	FSi
+	écrire("Votre salaires est de " & total & "€") 	 
+Fin

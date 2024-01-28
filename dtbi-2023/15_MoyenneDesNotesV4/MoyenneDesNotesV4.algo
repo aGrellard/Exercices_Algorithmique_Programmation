@@ -1,0 +1,54 @@
+# TP : Moyenne de notes V4
+# 
+# Saisir des notes et les stocker dans un tableau
+# -1 pour terminer la saisie
+# Exemple d’affichage :
+# Note ?
+# 12
+# Note ?
+# 15
+# Note ?
+# 8
+# Note ?
+# 7
+# Note ?
+# -1
+# La moyenne des notes (12; 15; 8; 7) est de 10,5
+# 
+# ALGO ################################################
+# 
+#####################################################
+Algo MoyenneDesNotesV4
+	Constante TAILLE_MAX : entier <- 20
+	Constante demander_note : texte <- "Saisissez un note, (-1 pour terminer la saisie)"
+	Variable notes : réel[TAILLE_MAX]
+	Variable nb_notes : entier <- 0
+	Variable terminer_saisie : réel <- -1
+    Variable saisie : réel <- 0.00 
+    Variable i : entier <- 0
+    Varaible moyenne  : réel <- 0.0
+    Varaible notes_somme  : réel <- 0.0
+Fin
+     
+	TantQue (nb_notes < TAILLE_MAX et saisie != terminer_saisie)
+        saisie <- saisir()
+        Si (saisie != terminer_saisie) Alors
+            notes[nb_notes] <- saisie
+            notes_somme <- notes_somme + note[i]
+            nb_notes <- nb_notes + 1
+        FSi
+	FTq
+
+    écrire("la moyenne des notes (")
+    Pour i <- 0 à nb_notes -1
+        Si (i > 0) alors
+            écrireSRC("; ")
+        FSi
+        écrireSRC(notes[i]) 
+    FPour
+    moyenne <- (notes_somme / nb_notes)
+    écrire(") est de " & moyenne) 
+    écrire("sur un total de: " & nb_notes & " notes pour une somme de: " & notes_somme)
+
+        
+

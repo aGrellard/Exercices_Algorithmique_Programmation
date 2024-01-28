@@ -1,0 +1,20 @@
+Algo UneErreurDeMoins
+Variable nbTentatives : entier <- 1
+Variable saisie : texte
+Constante MAX_TENTATIVES : entier <- 5
+Début
+	saisie <- saisir("Quelle est la capitale de la France ?")
+	TantQue saisie != "Paris" ou MAX_TENTATIVES - nbTentatives != 0
+		écrire("Mauvaise réponse")
+		écrire("Plus que " & MAX_TENTATIVES - nbTentatives & " tentative(s)")
+		saisie <- saisir("Quelle est la capitale de la France ?")
+		nbTentatives <- nbTentatives + 1
+	FTq
+	
+	Si MAX_TENTATIVES - nbTentatives != 0 Alors
+		écrire("Bravo !")
+	Sinon
+		écrire("Revoyez votre géographie !")
+	FSi
+Fin
+

@@ -1,0 +1,75 @@
+# TP : Créer un programme qui affiche un menu avec une liste de films et une option pour le quitter
+# 
+# Si l’utilisateur choisit l’un des films
+# 	Le programme affiche une réplique de ce film
+# 	L’utilisateur peut choisir un autre film ou quitter
+# Si l’utilisateur choisit de quitter
+# 	Le programme affiche un message avant de se terminer
+# 
+# Exemple d’affichage :
+# 1 – Une réplique de la cité de la peur
+# 2 – Une réplique de James Bond
+# 3 - Une réplique de la vie est un long fleuve tranquille
+# 4 – Une réplique de Star Wars
+# 5 – Quitter cette magnifique application !
+# 2
+# Je m’appelle Bond, James Bond
+# 1
+# Attention, c’est une véritable boucherie !
+# 5
+# Au revoir !
+# 
+# ALGO ################################################
+# 1 déclaration liste de films avec numéro
+# 2 déclaration répliques
+# 3 déclaration des demandes
+# 4 déclaration saisi
+# 5 boucle TanQue || Répéter
+# 6 affichage liste films
+# 7 demande choix film, ou quitter
+# 8 saisie choix utilisateur
+# 9 fin booucle
+# 10 affichage byby
+#####################################################
+
+Algo filmsEtReplique
+	Constante films_1 : texte <- "La cité de la peur"
+	Constante films_2 : texte <- "GoldenEye"
+	Constante films_3 : texte <- "La vie est un long fleuve tranquille"
+	Constante films_4 : texte <- "Star Wars - Épisode I : La Menace fantôme"
+
+	Constante replique : texte <- "Voici un réplique du film "
+
+	Constante replique_1 : texte <- ": c’est une véritable boucherie !"
+	Constante replique_2 : texte <- ": Je m’appelle Bond, James Bond"
+	Constante replique_3 : texte <- ": J'vais mettre la viande dans le torchon."
+	Constante replique_4 : texte <- ": Que la force soit avec toi."
+
+	Constante choix_film_1 : texte <- "choix 1) "
+	Constante choix_film_2 : texte <- "choix 2) "
+	Constante choix_film_3 : texte <- "choix 3) "
+	Constante choix_film_4 : texte <- "choix 4) "
+	Constante choix_quitter : texte <- "choix 5) quiter"
+
+	Variable choix_utilisateur : entier <- 0
+	Répéter 
+		écrire("Afficher une réplique du film : ")
+		écrire(choix_film_1 & films_1)
+		écrire(choix_film_2 & films_2)
+		écrire(choix_film_3 & films_3)
+		écrire(choix_film_4 & films_4)
+		écrire(choix_quitter)
+		choix_utilisateur <- saisir()
+
+		Selon choix_utilisateur
+			cas 1 : écrire(replique & films_1 & replique_1)
+			cas 2 : écrire(replique & films_2 & replique_2)
+			cas 3 : écrire(replique & films_3 & replique_3)
+			cas 4 : écrire(replique & films_4 & replique_4)
+			autre : écrire("Aucun film ne coresspond a la slelection !!") 
+		FSelon
+	TantQue (choix_utilisateur != 5) FRépéter
+
+	écrire("Aurevoir") 
+Fin
+

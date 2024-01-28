@@ -1,0 +1,40 @@
+# TP : Créer un programme qui vérifie si le nombre choisi par l’utilisateur est un multiple de 3
+# 
+# Exemple d’affichage :
+# Entrez un multiple de 3
+# 7579
+# , 7579 n’est pas un multiple de 3
+# 16427
+# Erreur, 16427 n’est pas un multiple de 3
+# 51321
+# Ok : 51321 est un multiple de 3
+# 
+# ALGO ################################################
+# int nbUtilisateur
+# string afficher_choixNbUtilisateur
+#
+# Répeter TantQue nbUtilisateur % 3 != 0
+# 
+# saisir nbUtilisateur
+# modulo de nbUtilisateur
+#
+#####################################################
+
+Algo devinerUnNombre
+	Constante afficher_choixNbUtilisateur : texte <- "Entrez un multiple de 3"
+	Constante afficher_resultaTrue : texte <- " est bien un multiple de 3"
+	Constante afficher_resultaFalse : texte <- " n'est pas un multiple de 3"
+	Constante afficher_erreur : texte <- "Erreur "
+	Constante afficher_succes : texte <- "Bravo "
+	Variable nbUtilisateur : entier <- 0
+	
+Début
+	Répéter
+		écrire(afficher_choixNbUtilisateur)
+		nbUtilisateur <- saisir()
+		Si (nbUtilisateur % 3 != 0) Alors 
+			écrire(afficher_erreur & nbUtilisateur & afficher_resultaFalse)
+		FSi
+	TantQue (nbUtilisateur % 3 != 0) FRépéter
+	écrire(afficher_succes & nbUtilisateur & afficher_resultaTrue)
+Fin

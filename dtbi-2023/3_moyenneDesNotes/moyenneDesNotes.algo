@@ -1,0 +1,39 @@
+# TP : Ecrire un algorithme qui calcule la moyenne des notes et qui aurait ce rendu :
+# Entrez le nombre de valeurs : 			
+# 3	
+# Valeur :						
+# 12
+# Valeur : 
+# 17,5
+# Valeur : 
+# 14
+# La moyenne est 14,5
+# ALGO ################################################
+# 1 déclarations
+# 2 boucler jusqua
+# 3 demander utilisateur note
+# 4 incrementation des notes
+# 5 calcul de la moyenne 
+# 6 affichage utilisateur résulta
+#####################################################
+
+Algo calculMoyenneNotes
+	Constante demander_note : texte <- "Saisire une note : "
+	Constante afficher_moyenne : texte <- "La moyenne est de : "
+	Constante total_notes : entier <- 3
+	Variable somme_notes : réel <- 0.0
+	Variable saisie_note : réel <- 0.0
+	Variable resulta : réel <- 0.0
+	Variable i : entier <- 1
+Début
+	# on dit au à vaut <= 3 pseudocode ?
+	Pour i <- 1 à total_notes 
+		écrire(demander_note)
+		saisie_note <- saisir()
+		somme_notes <- somme_notes + saisie_note
+	FPour
+	resulta <- somme_notes / total_notes
+	écrire(afficher_moyenne & resulta)
+Fin
+
+	

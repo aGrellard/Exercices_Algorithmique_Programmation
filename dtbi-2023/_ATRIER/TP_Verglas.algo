@@ -1,0 +1,31 @@
+# ecrire un algorithme qui affiche une info selon la température saisie
+# t < 2 			risque de verglas
+# 2 <= t < 15 		c'est pas chaud
+# 15 <= t < 30 		Bonne température
+# t >= 30 			Trop chaud
+
+Algo infosTemperature
+	Variable info_1 texte <-  "Risque de verglas"
+	Variable info_2 texte <-  "C'est pas chaud"
+	Variable info_3 texte <-  "Bonne température"
+	Variable info_4 texte <-  "Trop chaud"
+	Variable T : réel <- 0
+	Début
+		T <- saisir("Saisissez la température")
+		Si T < 2 Alors
+			écrire(info_1)
+		Si non 
+			Si T >= 2 et T < 15 Alors
+				écrire(info_2)
+			Si non
+				Si T >= 15 et T < 30 Alors
+					écrire(info_3
+				Si non
+					Si T >= 30 Alors # optionel et inutile mais pour le fun je laisse
+						écrire(info_4)
+					FinSi
+				FinSi	
+			FinSi
+		FinSi
+	Fin
+	

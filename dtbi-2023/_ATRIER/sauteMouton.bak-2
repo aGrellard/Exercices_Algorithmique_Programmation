@@ -1,0 +1,186 @@
+
+Procédure resetResult(vec : entier[])
+	Variable i : entier <- 0
+Début
+    Pour i <- 0 à 3 # 0 < 3
+        vec[i] <- -1
+    FPour
+Fin
+
+Fonction actionToString(action : entier) : Chaîne
+Début
+    Selon action
+        cas 0:
+            Retourner "AVANCER"
+        cas 1:
+            Retourner "SAUTER"
+        autre :
+            Retourner "ERREUR"
+    FSelon
+Fin
+
+Fonction taille_pos_moutons() Retourne entier
+# depend du langage utiliser
+#	lignes 	sizeof(array) / sizeof(array[0])
+#	col :		sizeof(array[0]) / sizeof(array[0][0])
+# 	vector::size()
+
+#	lignes 	len(list)
+#	col :		len(list[0])
+
+# 	lignes 	list.length
+# 	col 		list[]0.length
+Début
+	Retourner 7
+Fin
+
+Fonction deplacerMouton(mSel : entier, action : Action, result : entier[], tab : entier[][]]) : Retourne booléen
+    Variable destination : entier <- -1
+    Variable myDir : entier <- tab[mSel][1]
+Début
+    Selon action
+        cas 0 :
+            Si result[0] == 1 Alors
+                Si myDir == 0 Alors
+                    destination <- mSel + 1
+                Sinon Si myDir == 1 Alors
+                    destination <- mSel - 1
+                Fin Si
+            Fin Si
+        cas 1 :
+            Si result[1] == 1 Alors
+                Si myDir == 0 Alors
+                    destination <- mSel + 2
+                Sinon Si myDir == 1 Alors
+                    destination <- mSel - 2
+                Fin Si
+            Fin Si
+        autre :
+            
+    FSelon
+
+    Si destination == -1 Alors
+        Retourner false
+	FSi
+
+    tab[mSel][0] <- 0
+    tab[mSel][1] <- 0
+
+    tab[destination][0] <- 1
+    tab[destination][1] <- myDir
+	
+	Retourner true
+Fin
+
+Fonction verifierPosition(mSel : entier, tab : entier[][], result : entier[]) Retourne entier
+    Variable avancer : booléen  <- faux
+    Variable sauter : booléen  <- faux
+	Variable dir : entier <- 0
+Début
+    Si mSel > taille_pos_moutons() - 1 Alors
+		Retourner 1
+    FSi
+
+    Si tab[mSel][0] == 0 Alors
+        Retourner 2
+    FSi
+
+    
+    Si tab[mSel][1] == 0 Alors
+        dir <- 0
+    Sinon Si tab[mSel][1] == 1 Alors
+        dir <- 1
+    autre :
+        Retourner 3
+    FSi
+
+    Selon dir
+        cas 0 :
+            Si mSel + 2 <= taille_pos_moutons() - 1 Alors
+                sauter <- tab[mSel + 2][0] == 0
+            FSi
+            Si mSel + 1 <= taille_pos_moutons() - 1 Alors
+                avancer <- tab[mSel + 1][0] == 0
+            FSi
+        cas 1 :
+            Si mSel - 2 >= 0 Alors
+                sauter <- tab[mSel - 2][0] == 0
+            FSi
+            Si mSel - 1 >= 0 Alors
+                avancer <- tab[mSel - 1][0] == 0
+            FSi
+        autre :
+    FSelon
+
+    result[0] <- avancer
+    result[1] <- sauter
+    result[2] <- dir
+
+    Retourner 0
+Fin 
+
+Fonction afficherGrille(pos_moutons : entier[][])
+    Variable result : entier[] <- [-1, -1, -1]
+	Variable direction : texte <- ""
+	Variable i : entier
+Début
+    écrire()
+    Pour i de 0 à taille_pos_moutons() - 1
+		écrireSRC(" " & i & " |")
+    FPour
+	écrire()
+
+    Pour i <- 0 à taille_pos_moutons() - 1
+        resetResult(result)
+        verifierPosition(i, pos_moutons, result)
+
+        direction <- " "
+        Si result[2] == 0 Alors
+            direction <- ">"
+        Sinon Si result[2] == 1 Alors
+            direction <- "<"
+        FSi
+
+		écrireSRC(" " & direction & " |")
+    FPour
+	écrire()
+Fin
+
+Fonction lancer_partie(result : entier[], tab : entier[][]) 
+    Variable check : entier <- 0
+    Variable action : entier <- 0
+    Variable mSel : entier <- 0
+    Variable continuer : booléen <- true
+    Variable menuMod : entier <- 0
+Début
+    TantQue (continuer)
+        Si menuMod == 0 Alors
+            écrire("Choisissez un mouton (-1 pour quitter)")
+            mSel <- saisir()
+            écrire("")
+
+            Si mSel == -1 Alors
+                continuer <- faux
+                Sortir de la boucle
+            FSi
+
+            resetResult(result)
+            check <- verifierPosition(mSel, tab, result)
+            checkReturn(check, tab)
+        FSi
+
+        Si check == 0 Alors
+            Afficher "Avancer (0) ou Sauter (1) ?"
+            action <- saisir()
+
+            Si deplacerMouton(mSel, action, result, tab) == false Alors
+                écrire("Le mouton ne peut pas :" & actionToString(action))
+                menuMod <- 1
+            Sinon
+                menuMod <- 0
+                afficherGrille(tab)
+                écrire("")
+            FSi
+        FSi
+    FTq
+Fin
